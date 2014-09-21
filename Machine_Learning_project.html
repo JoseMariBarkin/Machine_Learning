@@ -185,8 +185,6 @@ hljs.initHighlightingOnLoad();
 
 <h2>Data retrieval, processing and transformation</h2>
 
-<p>This section includes of the steps to get the required data for this project, clean and process the data.</p>
-
 <p>The data for this project come from this source: <a href="http://groupware.les.inf.puc-rio.br/har">http://groupware.les.inf.puc-rio.br/har</a>. The information has been generously provided for use use in this cousera course by the authors, Velloso, E.; Bulling, A.; Gellersen, H.; Ugulino, W.; Fuks, H. They have allowed the use of their paper âQualitative Activity Recognition of Weight Lifting Exercises. Proceedings of 4th International Conference in Cooperation with SIGCHI (Augmented Human â13) . Stuttgart, Germany: ACM SIGCHI, 2013.
 The training data for this project are available here:
 <a href="https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv">https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv</a>
@@ -292,10 +290,10 @@ columnNACounts &lt;- colSums(is.na(testing))         # getting NA counts for all
 ## 5580 3797 3422 3216 3607
 </code></pre>
 
-<pre><code class="r">plot(cleanTrainingdata$classe,col=c(&quot;green&quot;, &quot;purple&quot;, &quot;orange&quot;, &quot;blue&quot;, &quot;yellow&quot;),main = &quot;`classe` frequency plot&quot;, xlab = &quot;Types of Weight Lifting Exercices&quot;)
+<pre><code class="r">plot(cleanTrainingdata$classe,col=c(&quot;green&quot;, &quot;purple&quot;, &quot;orange&quot;, &quot;blue&quot;, &quot;yellow&quot;),main = &quot;`frequency&quot;, xlab = &quot;Types of Weight Lifting Exercices&quot;)
 </code></pre>
 
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAtFBMVEX9/v0AAAAAADkAAGUAAP8AOTkAOWUAOY8AZo8AZrUA/wA5AAA5ADk5AGU5OWU5OY85ZmU5ZrU5j485j9plAABlADllAGVlOQBlOTllOY9lZgBlZjllZmVltbVltdpltf2POQCPOTmPOWWPZgCPjzmPtY+P27WP29qP2/2gIPC1ZgC1Zjm1tWW124+1/rW1/v3ajzna24/a/rXa/tra/v39tWX924/9/rX9/tr9/v3/pQD//wCrCXkTAAAAPHRSTlP///////////////////////////////////////////////////////////////////////////8A//8oEjDHAAAACXBIWXMAAAsSAAALEgHS3X78AAAMTElEQVR4nO3dDXvbthmF4dLd5mme62ZS0qbtZiVtN09ZarbR5/b//9eAFwQpWWJNhZAl8DznymWJHwJp3gYIOKT5xYZI5otz7wA5T4AXDfCiAV40wIsGeNEALxrgRQO8aIAXDfCiAV40wIsGeNEALxrgRQO8aIAXDfCiAV40wIsGeNEALxrgRQO8aPKFX95cz+uJ1eTLxyM+sbwprh7S7s6TPZjdpy0+efKFd3rNwe0E33xiViR32d2DE2wgcTKGt6ynReGOuB32RVFYRXb12c+rXzelW3C/+5ni+tP06nu/elzo5/5tcj1fT6083zhUi9yc/4SSwtZsjUUxDmVVywK8/8Q4bGB0ngPSNZnD2yF2x90f9tXEv7+eP3111a8wj50POXhbWi8Mb7bh46KwEScZt1a6H4dZOFdUy/zW3MfCJ0bAnzzLGzvc97Gh9a/xVL7zapx1fEvsdEZbC5c3TnKxDV8vcmuObVHc2vJmFMuzZe5H7D5s2ZWxmrgvNPUnTtXgVg2tr+NVzTe88LqwarjTmwvwfk69cOF/DFbbTX29yNYMc8LW1tPr3yaj6m1o4cd+D6yMjbUHwJ82i6pFDfUtNMR2bvfO1WsC+HpO1X6XVz/fxJ8B4M8Ra3yrw+5ewrRPPPLWMG+N+zb10gBfL7RmurSm3i0si6qp99lq/MPWtoaDNPXnyXbnLtTQpubXLUDstjUfa+Cbhe1vavi4Nb/Z+ofiQOfOSqVzd9rMrBGPh33s21kvHod1Ne5Ord+Crxd6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" alt="plot of chunk unnamed-chunk-16"/> </p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAtFBMVEX9/v0AAAAAADkAAGUAAP8AOTkAOWUAOY8AZo8AZrUA/wA5AAA5ADk5AGU5OWU5OY85ZmU5ZrU5j485j9plAABlADllAGVlOQBlOTllOY9lZgBlZjllZmVltbVltdpltf2POQCPOTmPOWWPZgCPjzmPtY+P27WP29qP2/2gIPC1ZgC1Zjm1tWW124+1/rW1/v3ajzna24/a/rXa/tra/v39tWX924/9/rX9/tr9/v3/pQD//wCrCXkTAAAAPHRSTlP///////////////////////////////////////////////////////////////////////////8A//8oEjDHAAAACXBIWXMAAAsSAAALEgHS3X78AAALb0lEQVR4nO3dD3vaRADH8aVVK2LFCZubm5ZNp8jcyDYIRN//+/L+JIEWMsJyLbn8vt/HZysQT8anIXeVLI9ykuzRuZ8AnSfgRQNeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjQJ+Gx4tbS/Jhezcz+VziQBb8xv8nye3Jz7eXQoDXjTZpokydWn6cULu9+n5sZNce9Pk6vlZnq5yNcT+8ZQPGTu+SdJzL1um8uF22KVjM/95wiVHLz9dTlPbGP7LpC4O7bw5UNu+yQZFF9cLlLz7TDvz7FCBt6/1RvFQXHMt9bZ0EiuduGrh8yWY/dQNjQPmX83Gw7cVj1JDt7usyu3M5u3/JX9NljvvtVXD7kt/T3+7X0zvfo4GZz5zxAu4Gvhq3sK7fTizbA3h3hNeL+8y+0XbqJn4c2DaVK81dt23vzNF6nZ7fu1HJSEr+Z0n/migi8nd3Z+UHxT9CFNeMdrFa3qr3Yyv54UX5QP7Szw5klSfLv05xCvBF+X121Q2qefAAHfGL5Pizng88bwadKnHR541YAXDXjRgBcNeNGAFw140YAXDXjRgBcNeNGAFw140YAXDXjRgBcNeNGAFw140YAXLSB80r5wT4aOFBL+u7YB/3ABLxrwogEvGvCiAS8a8KIBLxrwogEvGvCiAS8a8KIBLxrwogEvGvCiAS8a8KIBLxrwogEvGvCiAS/acfhsmBSXaDgS8DF1FH4z9X9Z9+ro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" alt="plot of chunk unnamed-chunk-16"/> </p>
 
 <h1>Model Building</h1>
 
@@ -321,11 +319,141 @@ dim(trainingdata)
 
 <p>Next, we use the features in the trainingdata dataset, we will build our model using the Random Forest machine learning technique.</p>
 
-<pre><code class="r"># trainingdata
-# model &lt;- train(trainingdata$classe ~., data = trainingdata, method = &quot;rf&quot;, prox = TRUE, trControl=trainControl(method = &quot;cv&quot;,numbe = 4,allowParallel=TRUE))
+<pre><code class="r">library(randomForest)
 </code></pre>
 
-<pre><code class="r"># print (model)
+<pre><code>## Warning: package &#39;randomForest&#39; was built under R version 3.1.1
+</code></pre>
+
+<pre><code>## randomForest 4.6-10
+## Type rfNews() to see new features/changes/bug fixes.
+</code></pre>
+
+<pre><code class="r">model &lt;- train(trainingdata$classe ~., data = trainingdata, method = &quot;rf&quot;, prox = TRUE, trControl=trainControl(method = &quot;cv&quot;,numbe = 4,allowParallel=TRUE))
+print (model)
+</code></pre>
+
+<pre><code>## Random Forest 
+## 
+## 11776 samples
+##    53 predictor
+##     5 classes: &#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (4 fold) 
+## 
+## Summary of sample sizes: 8832, 8832, 8830, 8834 
+## 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy  Kappa  Accuracy SD  Kappa SD
+##    2    1         1      0.001        0.002   
+##   27    1         1      0.004        0.005   
+##   53    1         1      0.002        0.002   
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was mtry = 27.
+</code></pre>
+
+<p>We build the model using 4-fold cross validation.</p>
+
+<h2>In sample accuracy</h2>
+
+<p>Now we calculate the &quot;in sample&rdquo;&ldquo; accuracy which is the prediction accuracy of our model on the training data set.</p>
+
+<pre><code class="r">training_pred &lt;- predict(model, trainingdata)
+confusionMatrix(training_pred, trainingdata$classe)
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 3348    0    0    0    0
+##          B    0 2279    0    0    0
+##          C    0    0 2054    0    0
+##          D    0    0    0 1930    0
+##          E    0    0    0    0 2165
+## 
+## Overall Statistics
+##                                 
+##                Accuracy : 1     
+##                  95% CI : (1, 1)
+##     No Information Rate : 0.284 
+##     P-Value [Acc &gt; NIR] : &lt;2e-16
+##                                 
+##                   Kappa : 1     
+##  Mcnemar&#39;s Test P-Value : NA    
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity             1.000    1.000    1.000    1.000    1.000
+## Specificity             1.000    1.000    1.000    1.000    1.000
+## Pos Pred Value          1.000    1.000    1.000    1.000    1.000
+## Neg Pred Value          1.000    1.000    1.000    1.000    1.000
+## Prevalence              0.284    0.194    0.174    0.164    0.184
+## Detection Rate          0.284    0.194    0.174    0.164    0.184
+## Detection Prevalence    0.284    0.194    0.174    0.164    0.184
+## Balanced Accuracy       1.000    1.000    1.000    1.000    1.000
+</code></pre>
+
+<p>Thus, from the above statistics we see that the in sample accuracy value is 1 which is 100%.</p>
+
+<h2>Out of sample accuracy</h2>
+
+<p>We also calculate the &quot;out of sample&rdquo; accuracy which is the prediction accuracy of our model on the testing data set.</p>
+
+<pre><code class="r">testing_pred &lt;- predict(model, testingdata)
+confusionMatrix(testing_pred, testingdata$classe)
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 2231    9    0    0    0
+##          B    0 1505    2    0    0
+##          C    0    3 1366    9    0
+##          D    0    1    0 1276    0
+##          E    1    0    0    1 1442
+## 
+## Overall Statistics
+##                                         
+##                Accuracy : 0.997         
+##                  95% CI : (0.995, 0.998)
+##     No Information Rate : 0.284         
+##     P-Value [Acc &gt; NIR] : &lt;2e-16        
+##                                         
+##                   Kappa : 0.996         
+##  Mcnemar&#39;s Test P-Value : NA            
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity             1.000    0.991    0.999    0.992    1.000
+## Specificity             0.998    1.000    0.998    1.000    1.000
+## Pos Pred Value          0.996    0.999    0.991    0.999    0.999
+## Neg Pred Value          1.000    0.998    1.000    0.998    1.000
+## Prevalence              0.284    0.193    0.174    0.164    0.184
+## Detection Rate          0.284    0.192    0.174    0.163    0.184
+## Detection Prevalence    0.285    0.192    0.176    0.163    0.184
+## Balanced Accuracy       0.999    0.996    0.998    0.996    1.000
+</code></pre>
+
+<p>Thus, from the above statistics we see that the out of sample accuracy value is 0.996 which is 99.6%.</p>
+
+<h1>Prediction Assignment</h1>
+
+<p>In this section, we apply the above machine learning algorithm to each of the 20 test cases in the testing data set provided.</p>
+
+<pre><code class="r">results &lt;- predict(model, cleanTestingdata)
+results &lt;- as.character(results)
+results
+</code></pre>
+
+<pre><code>##  [1] &quot;B&quot; &quot;A&quot; &quot;B&quot; &quot;A&quot; &quot;A&quot; &quot;E&quot; &quot;D&quot; &quot;B&quot; &quot;A&quot; &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;B&quot; &quot;A&quot; &quot;E&quot; &quot;E&quot; &quot;A&quot;
+## [18] &quot;B&quot; &quot;B&quot; &quot;B&quot;
 </code></pre>
 
 </body>

@@ -6,10 +6,6 @@ Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible t
 
 ## Data retrieval, processing and transformation
 
-This section includes of the steps to get the required data for this project, clean and process the data.
-
-
-
 The data for this project come from this source: http://groupware.les.inf.puc-rio.br/har. The information has been generously provided for use use in this cousera course by the authors, Velloso, E.; Bulling, A.; Gellersen, H.; Ugulino, W.; Fuks, H. They have allowed the use of their paper “Qualitative Activity Recognition of Weight Lifting Exercises. Proceedings of 4th International Conference in Cooperation with SIGCHI (Augmented Human ’13) . Stuttgart, Germany: ACM SIGCHI, 2013.
 The training data for this project are available here:
 https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv
@@ -174,7 +170,7 @@ summary(cleanTrainingdata$classe)
 
 
 ```r
-plot(cleanTrainingdata$classe,col=c("green", "purple", "orange", "blue", "yellow"),main = "`classe` frequency plot", xlab = "Types of Weight Lifting Exercices")
+plot(cleanTrainingdata$classe,col=c("green", "purple", "orange", "blue", "yellow"),main = "`frequency", xlab = "Types of Weight Lifting Exercices")
 ```
 
 ![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16.png) 
@@ -213,13 +209,157 @@ Next, we use the features in the trainingdata dataset, we will build our model u
 
 
 ```r
-# trainingdata
-# model <- train(trainingdata$classe ~., data = trainingdata, method = "rf", prox = TRUE, trControl=trainControl(method = "cv",numbe = 4,allowParallel=TRUE))
+library(randomForest)
 ```
+
+```
+## Warning: package 'randomForest' was built under R version 3.1.1
+```
+
+```
+## randomForest 4.6-10
+## Type rfNews() to see new features/changes/bug fixes.
+```
+
+```r
+model <- train(trainingdata$classe ~., data = trainingdata, method = "rf", prox = TRUE, trControl=trainControl(method = "cv",numbe = 4,allowParallel=TRUE))
+print (model)
+```
+
+```
+## Random Forest 
+## 
+## 11776 samples
+##    53 predictor
+##     5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (4 fold) 
+## 
+## Summary of sample sizes: 8832, 8832, 8830, 8834 
+## 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy  Kappa  Accuracy SD  Kappa SD
+##    2    1         1      0.001        0.002   
+##   27    1         1      0.004        0.005   
+##   53    1         1      0.002        0.002   
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was mtry = 27.
+```
+
+We build the model using 4-fold cross validation.
+
+## In sample accuracy
+
+
+Now we calculate the "in sample"" accuracy which is the prediction accuracy of our model on the training data set.
+
 
 
 ```r
-# print (model)
+training_pred <- predict(model, trainingdata)
+confusionMatrix(training_pred, trainingdata$classe)
 ```
 
+```
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 3348    0    0    0    0
+##          B    0 2279    0    0    0
+##          C    0    0 2054    0    0
+##          D    0    0    0 1930    0
+##          E    0    0    0    0 2165
+## 
+## Overall Statistics
+##                                 
+##                Accuracy : 1     
+##                  95% CI : (1, 1)
+##     No Information Rate : 0.284 
+##     P-Value [Acc > NIR] : <2e-16
+##                                 
+##                   Kappa : 1     
+##  Mcnemar's Test P-Value : NA    
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity             1.000    1.000    1.000    1.000    1.000
+## Specificity             1.000    1.000    1.000    1.000    1.000
+## Pos Pred Value          1.000    1.000    1.000    1.000    1.000
+## Neg Pred Value          1.000    1.000    1.000    1.000    1.000
+## Prevalence              0.284    0.194    0.174    0.164    0.184
+## Detection Rate          0.284    0.194    0.174    0.164    0.184
+## Detection Prevalence    0.284    0.194    0.174    0.164    0.184
+## Balanced Accuracy       1.000    1.000    1.000    1.000    1.000
+```
+
+Thus, from the above statistics we see that the in sample accuracy value is 1 which is 100%.
+
+
+## Out of sample accuracy
+
+We also calculate the "out of sample" accuracy which is the prediction accuracy of our model on the testing data set.
+
+
+```r
+testing_pred <- predict(model, testingdata)
+confusionMatrix(testing_pred, testingdata$classe)
+```
+
+```
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 2231    9    0    0    0
+##          B    0 1505    2    0    0
+##          C    0    3 1366    9    0
+##          D    0    1    0 1276    0
+##          E    1    0    0    1 1442
+## 
+## Overall Statistics
+##                                         
+##                Accuracy : 0.997         
+##                  95% CI : (0.995, 0.998)
+##     No Information Rate : 0.284         
+##     P-Value [Acc > NIR] : <2e-16        
+##                                         
+##                   Kappa : 0.996         
+##  Mcnemar's Test P-Value : NA            
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity             1.000    0.991    0.999    0.992    1.000
+## Specificity             0.998    1.000    0.998    1.000    1.000
+## Pos Pred Value          0.996    0.999    0.991    0.999    0.999
+## Neg Pred Value          1.000    0.998    1.000    0.998    1.000
+## Prevalence              0.284    0.193    0.174    0.164    0.184
+## Detection Rate          0.284    0.192    0.174    0.163    0.184
+## Detection Prevalence    0.285    0.192    0.176    0.163    0.184
+## Balanced Accuracy       0.999    0.996    0.998    0.996    1.000
+```
+
+Thus, from the above statistics we see that the out of sample accuracy value is 0.996 which is 99.6%.
+
+
+# Prediction Assignment
+
+In this section, we apply the above machine learning algorithm to each of the 20 test cases in the testing data set provided.
+
+
+```r
+results <- predict(model, cleanTestingdata)
+results <- as.character(results)
+results
+```
+
+```
+##  [1] "B" "A" "B" "A" "A" "E" "D" "B" "A" "A" "B" "C" "B" "A" "E" "E" "A"
+## [18] "B" "B" "B"
+```
 
