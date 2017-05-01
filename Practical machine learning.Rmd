@@ -2,7 +2,9 @@
 title: "Practical machine learning"
 author: "Jose Mari"
 date: "May 1, 2017"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -35,7 +37,7 @@ You should also apply your machine learning algorithm to the 20 test cases avail
 
 ## Preliminary Work
 
-### Environment & Reproduceability
+### Environment & Reproducibility
 
 * The project/document have been developped with: RSudio R version 3.3.3 (2017-03-06) on Windows 10.
 * Pseudo-random number generator seed: 1000
@@ -45,11 +47,11 @@ You should also apply your machine learning algorithm to the 20 test cases avail
 ### How the model was built
 
 Our outcome variable is classe, a factor variable with 5 levels. For this data set, “participants were asked to perform one set of 10 repetitions of the Unilateral Dumbbell Biceps Curl in 5 different fashions:
-- exactly according to the specification (Class A)
-- throwing the elbows to the front (Class B)
-- lifting the dumbbell only halfway (Class C)
-- lowering the dumbbell only halfway (Class D)
-- throwing the hips to the front (Class E)
+* exactly according to the specification (Class A)
+* throwing the elbows to the front (Class B)
+* lifting the dumbbell only halfway (Class C)
+* lowering the dumbbell only halfway (Class D)
+* throwing the hips to the front (Class E)
 Class A corresponds to the specified execution of the exercise, while the other 4 classes correspond to common mistakes." [1]
 Prediction evaluations will be based on maximizing the accuracy and minimizing the out-of-sample error. All other available variables after cleaning will be used for prediction.
 Two models will be tested using decision tree and random forest algorithms. The model with the highest accuracy will be chosen as our final model
@@ -69,7 +71,7 @@ The expected out-of-sample error will correspond to the quantity: 1-accuracy in 
 Our outcome variable “classe” is an unordered factor variable. Thus, we can choose our error type as 1-accuracy. We have a large sample size with N= 19622 in the Training data set. This allow us to divide our Training sample into subTraining and subTesting to allow cross-validation. Features with all missing values will be discarded as well as features that are irrelevant. All other features will be kept as relevant variables.
 Decision tree and random forest algorithms are known for their ability of detecting the features that are important for classification [2]. Feature selection is inherent, so it is not so necessary at the data preparation phase. Thus, there won’t be any feature selection section in this report.
 
-## Code and Results
+## Code & Results
 
 ### loading Libraries and set Seed
 
@@ -130,19 +132,20 @@ head(subTesting)
 
 ```
 
-### A look at the data
+### Data analysis
 
 The variable “classe” contains 5 levels: A, B, C, D and E. A plot of the outcome variable will allow us to see the frequency of each levels in the subTraining data set and compare one another
 
 ```{r echo = FALSE, cache = TRUE}
 
-plot(subTraining$classe, col="green", main="Bar Plot of levels of the variable classe within the subTraining data set", xlab="classe levels", ylab="Frequency")
+plot(subTraining$classe, col = "green", main="Bar Plot of levels of the variable classe within the subTraining data set", xlab = "classe levels", ylab = "Frequency")
 
 ```
 
 From the graph above, we can see that each level frequency is within the same order of magnitude of each other. Level A is the most frequent with more than 4000 occurrences while level D is the least frequent with about 2500 occurrences.
 
-### First prediction model: Using Decision Tree
+
+### Prediction model: Using Decision Tree
 
 ```{r echo = FALSE, cache = TRUE}
 
@@ -157,9 +160,7 @@ rpart.plot(model1, main="Classification Tree", extra=102, under=TRUE, faclen=0)
 ```
 
 
-
-
-### Second prediction model: Using Random Forest
+### Prediction model: Using Random Forest
 
 ```{r echo = FALSE, cache = TRUE}
 
